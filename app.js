@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
+app.use((req, res, next) => {
+    console.log(`Запит: ${req.method} ${req.url}`);
+    next();
+})
+
 app.get('/', (req, res) => {
     res.send('Привіт з Express.js!')
 });
@@ -14,7 +21,6 @@ app.get('/user/:id', (req, res) => {
     res.send(`user ID: ${userId}`);
 })
 
-app.use(express.json());
 app.post('/submit', (req, res) => {
     const {name, email} = req.body;
     res.send(`Отримано дані: Ім'я - ${name}, Електронна пошта - ${email}`)
